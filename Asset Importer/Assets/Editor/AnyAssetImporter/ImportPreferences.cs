@@ -26,7 +26,7 @@ namespace AnyAssetImporter
         public const string AudioTitle = "Audio";
         public const string SettingTitle = "Setting";
 
-        private const string defaultRulePath = "Assets/Scripts/Editor/AnyAssetImporter/RuleConfigs";
+        private const string defaultRulePath = "Assets/Editor/AnyAssetImporter/RuleConfigs";
 
         public const string NewRule = "New";
         public const string AddRule = "Add";
@@ -71,8 +71,14 @@ namespace AnyAssetImporter
         {
             get
             {
-                if (importerSetting == null && File.Exists(settingPath))
-                    importerSetting = AssetDatabase.LoadAssetAtPath<AnyImporterSettingRule>(settingPath);
+                if (importerSetting == null)
+                {
+                    if(File.Exists(settingPath))
+                        importerSetting = AssetDatabase.LoadAssetAtPath<AnyImporterSettingRule>(settingPath);
+                    else
+                        importerSetting = new AnyImporterSettingRule();
+                }
+                    
                 return importerSetting;
             }
         }
